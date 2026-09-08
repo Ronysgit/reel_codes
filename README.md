@@ -1,2 +1,2 @@
 # reel_codes
-HTML, CSS and JavaScript codes from my reels
+HTML, CSS and JavaScript and python codes from my reels
