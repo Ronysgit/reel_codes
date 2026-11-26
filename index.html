@@ -1,15 +1,149 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cursor Creature</title>
-    <link rel="stylesheet" href="style.css"/>
-</head>
-<body>
-    <canvas id="creature"></canvas>
-    <p class="hint">move your cursor</p>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#10110f">
+    <meta name="description" content="A smooth, interactive 3D Rubik's Cube for your phone, tablet, and desktop.">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Cube Lab">
+    <title>Cube Lab — 3D Rubik's Cube</title>
+    <link rel="manifest" href="./manifest.webmanifest">
+    <link rel="icon" href="./icons/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Cube Lab home">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          <span>cube<span class="brand-light">lab</span></span>
+        </a>
+        <div class="topbar-right">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span class="topbar-label">3 × 3 × 3 · INTERACTIVE</span>
+          <button class="install-button" id="install-button" type="button" aria-haspopup="dialog">
+            <span aria-hidden="true">↓</span> Install app
+          </button>
+        </div>
+      </header>
 
-    <script src="script.js"></script>
-</body>
+      <main class="workspace">
+        <section class="cube-panel" aria-label="Interactive Rubik's Cube">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">YOUR PUZZLE, YOUR PACE</p>
+              <h1>Make a move.</h1>
+              <p class="subheading">Drag to look around. Tap a move to turn a face.</p>
+            </div>
+            <span class="cube-badge"><span aria-hidden="true">✳</span> 3×3</span>
+          </div>
+
+          <div class="cube-stage" id="cube-stage">
+            <div class="orbit orbit-one" aria-hidden="true"></div>
+            <div class="orbit orbit-two" aria-hidden="true"></div>
+            <div class="cube" id="cube" role="img" aria-label="Solved 3 by 3 Rubik's Cube. Drag to rotate the view.">
+              <div id="cube-layer" class="cube-layer"></div>
+            </div>
+            <div class="stage-caption"><span class="drag-icon" aria-hidden="true">↗</span> DRAG TO ORBIT</div>
+          </div>
+
+          <div class="stats-row" aria-label="Session statistics">
+            <div class="stat">
+              <span class="stat-label">TIME</span>
+              <span class="stat-value" id="timer">00:00.00</span>
+            </div>
+            <span class="stat-divider" aria-hidden="true"></span>
+            <div class="stat">
+              <span class="stat-label">MOVES</span>
+              <span class="stat-value" id="move-count">0</span>
+            </div>
+            <span class="stat-divider" aria-hidden="true"></span>
+            <div class="stat">
+              <span class="stat-label">BEST</span>
+              <span class="stat-value" id="best-time">—</span>
+            </div>
+          </div>
+        </section>
+
+        <aside class="control-panel" aria-label="Cube controls">
+          <div class="control-heading">
+            <div>
+              <p class="eyebrow">CONTROL DECK</p>
+              <h2>Make it yours</h2>
+            </div>
+            <span class="control-icon" aria-hidden="true">⌘</span>
+          </div>
+
+          <div class="action-row">
+            <button class="button button-primary" id="shuffle-button" type="button">
+              <span aria-hidden="true">⤨</span> Shuffle
+            </button>
+            <button class="button button-secondary" id="undo-button" type="button" disabled>
+              <span aria-hidden="true">↶</span> Undo
+            </button>
+            <button class="icon-button" id="reset-button" type="button" aria-label="Reset cube" title="Reset cube">
+              <span aria-hidden="true">⟳</span>
+            </button>
+          </div>
+
+          <div class="section-rule"></div>
+          <div class="moves-heading">
+            <div>
+              <h3>Face turns</h3>
+              <p>Clockwise · Counter-clockwise</p>
+            </div>
+            <span class="notation-pill">NOTATION</span>
+          </div>
+
+          <div class="move-grid" aria-label="Turn a face">
+            <button class="move-button" data-move="U" type="button"><span class="move-letter">U</span><span class="move-name">Up</span></button>
+            <button class="move-button reverse" data-move="U'" type="button" aria-label="Turn Up counter-clockwise"><span class="move-letter">U′</span><span class="move-name">Reverse</span></button>
+            <button class="move-button" data-move="R" type="button"><span class="move-letter">R</span><span class="move-name">Right</span></button>
+            <button class="move-button reverse" data-move="R'" type="button" aria-label="Turn Right counter-clockwise"><span class="move-letter">R′</span><span class="move-name">Reverse</span></button>
+            <button class="move-button" data-move="F" type="button"><span class="move-letter">F</span><span class="move-name">Front</span></button>
+            <button class="move-button reverse" data-move="F'" type="button" aria-label="Turn Front counter-clockwise"><span class="move-letter">F′</span><span class="move-name">Reverse</span></button>
+            <button class="move-button" data-move="D" type="button"><span class="move-letter">D</span><span class="move-name">Down</span></button>
+            <button class="move-button reverse" data-move="D'" type="button" aria-label="Turn Down counter-clockwise"><span class="move-letter">D′</span><span class="move-name">Reverse</span></button>
+            <button class="move-button" data-move="L" type="button"><span class="move-letter">L</span><span class="move-name">Left</span></button>
+            <button class="move-button reverse" data-move="L'" type="button" aria-label="Turn Left counter-clockwise"><span class="move-letter">L′</span><span class="move-name">Reverse</span></button>
+            <button class="move-button" data-move="B" type="button"><span class="move-letter">B</span><span class="move-name">Back</span></button>
+            <button class="move-button reverse" data-move="B'" type="button" aria-label="Turn Back counter-clockwise"><span class="move-letter">B′</span><span class="move-name">Reverse</span></button>
+          </div>
+
+          <div class="keyboard-hint"><span class="keycap">U</span><span class="keycap">R</span><span class="keycap">F</span><span class="keycap">D</span><span class="keycap">L</span><span class="keycap">B</span><span>keys to turn</span><span class="keycap shift-key">⇧</span><span>reverse</span></div>
+
+          <div class="tip-card">
+            <span class="tip-icon" aria-hidden="true">✦</span>
+            <div><strong>Every solve starts somewhere.</strong><p>Shuffle the cube and see where your next move takes you.</p></div>
+          </div>
+        </aside>
+      </main>
+
+      <footer class="footer">
+        <span>BUILT FOR THE LOVE OF THE TURN</span>
+        <span>NO RUSH. JUST ROTATION.</span>
+      </footer>
+      <div class="sr-only" id="live-region" aria-live="polite" aria-atomic="true"></div>
+    </div>
+
+    <dialog class="install-dialog" id="install-dialog" aria-labelledby="install-title">
+      <div class="dialog-top">
+        <span class="dialog-mark" aria-hidden="true">✳</span>
+        <button class="dialog-close" id="install-close" type="button" aria-label="Close install instructions">×</button>
+      </div>
+      <p class="eyebrow">TAKE THE CUBE WITH YOU</p>
+      <h2 id="install-title">Install Cube Lab</h2>
+      <p class="dialog-copy" id="install-summary"></p>
+      <ol class="install-steps" id="install-steps"></ol>
+      <p class="dialog-note" id="install-note"></p>
+      <button class="button button-primary dialog-done" id="install-done" type="button">Got it</button>
+    </dialog>
+  </body>
 </html>
