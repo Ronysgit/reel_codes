@@ -1,5 +1,5 @@
 // Bump this version when the app shell changes so installed copies refresh.
-const CACHE_NAME = "cube-lab-shell-v1";
+const CACHE_NAME = "cube-lab-shell-v2";
 const APP_ASSETS = [
   "./",
   "./index.html",

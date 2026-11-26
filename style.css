@@ -831,8 +831,8 @@ h3 {
   }
 
   .cube-panel {
-    min-height: 520px;
-    padding: 22px 19px 0;
+    min-height: 0;
+    padding: 14px 14px 0;
   }
 
   .panel-heading {
@@ -849,18 +849,22 @@ h3 {
   }
 
   .cube-stage {
-    min-height: 338px;
+    min-height: clamp(220px, 54vw, 250px);
   }
 
   :root {
-    --cube-size: min(260px, 67vw);
+    --cube-size: min(176px, 50vw);
+  }
+
+  .stage-caption {
+    bottom: 4px;
   }
 
   .stats-row {
-    min-height: 69px;
-    margin-right: -19px;
-    margin-left: -19px;
-    padding: 0 16px;
+    min-height: 58px;
+    margin-right: -14px;
+    margin-left: -14px;
+    padding: 0 12px;
   }
 
   .stat {
@@ -868,11 +872,27 @@ h3 {
   }
 
   .stat-value {
-    font-size: 15px;
+    font-size: 14px;
   }
 
   .control-panel {
-    padding: 21px 19px;
+    padding: 14px;
+  }
+
+  .control-heading {
+    margin-bottom: 12px;
+  }
+
+  .control-heading h2 {
+    font-size: 19px;
+  }
+
+  .section-rule {
+    margin: 12px 0;
+  }
+
+  .moves-heading {
+    margin-bottom: 10px;
   }
 
   .move-grid {
@@ -880,7 +900,7 @@ h3 {
   }
 
   .move-button {
-    min-height: 51px;
+    min-height: 46px;
     padding: 5px 6px;
     justify-content: center;
     gap: 5px;
@@ -927,13 +947,23 @@ h3 {
   }
 
   .control-panel {
-    padding-right: 15px;
-    padding-left: 15px;
+    padding-right: 12px;
+    padding-left: 12px;
   }
 
   .keyboard-hint {
     gap: 3px;
     font-size: 9px;
+  }
+
+  .move-button {
+    gap: 3px;
+    padding-right: 2px;
+    padding-left: 2px;
+  }
+
+  .move-name {
+    display: none;
   }
 }
 
